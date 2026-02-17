@@ -3,6 +3,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Security;
 using Microsoft.AspNetCore.Http;
+using System.Data;
 using static System.Net.WebRequestMethods;
 
 namespace Core.Services
@@ -29,6 +30,9 @@ namespace Core.Services
                 new
                 {
                     dto.Username,
+                    dto.FullName,
+                    dto.Email,
+                    Mobile=dto.MobileNumber,
                     Password = hashed,
                     Role = dto.Role.ToString(),
                     CreatedBy = userId,
@@ -48,7 +52,10 @@ namespace Core.Services
                 {
                     dto.Id,
                     dto.Username,
-                    Role=dto.Role.ToString(),
+                    dto.FullName,
+                    dto.Email,
+                    Mobile = dto.MobileNumber,
+                    Role =dto.Role.ToString(),
                     UpdatedBy = userId,
                     UpdatedOn = DateTime.UtcNow
                 });
@@ -73,6 +80,11 @@ namespace Core.Services
         {
             return await _uow.Repository.QueryAsync<User>(
                 "sp_User_GetAll");
+        }
+        public async Task<User> GetUsersByIdAsync(int userId)
+        {
+            var sql = "Select [FullName] ,[Email],[MobileNumber],[UserName] ,[Password] ,[Role] from Users where userId =  " + userId;
+            return await _uow.Repository.QuerySingleAsync<User>( sql,null,CommandType.Text);
         }
     }
 

@@ -12,6 +12,7 @@ namespace Core.Interfaces
     {
         Task<int> CreateUserAsync(CreateUserDto dto);
         Task<IEnumerable<User>> GetUsersAsync();
+        Task<User> GetUsersByIdAsync(int userId);
         Task UpdateUserAsync(UpdateUserDto dto);
         Task DeleteUserAsync(int id);
 

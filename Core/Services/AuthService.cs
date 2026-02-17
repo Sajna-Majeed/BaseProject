@@ -46,7 +46,10 @@ namespace Core.Services
 
 
             return new
-            {
+            {   
+                user.Username,
+                user.FullName,
+                user.Role,
                 accessToken,
                 refreshToken
             };

@@ -43,6 +43,12 @@ namespace API.Controllers
             var users = await _service.GetUsersAsync();
             return Ok(ApiResponse<object>.Ok(users));
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var users = await _service.GetUsersByIdAsync(id);
+            return Ok(ApiResponse<object>.Ok(users));
+        }
     }
 
 }
