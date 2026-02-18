@@ -1,6 +1,7 @@
 ﻿using Core.Interfaces;
 using Core.Security;
 using Core.Services;
+using Core.Services.ExternalServices;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,10 @@ namespace Infrastructure
                 new SqlConnectionFactory(
                     configuration.GetConnectionString("DefaultConnection")));
 
+
+            
+
+
             // --------------------
             // Unit of Work
             // --------------------
@@ -37,6 +42,7 @@ namespace Infrastructure
             // --------------------
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
 
             return services;
         }

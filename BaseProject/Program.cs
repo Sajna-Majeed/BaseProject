@@ -1,4 +1,6 @@
 using API.Middlewares;
+using Core.Interfaces;
+using Core.Services.ExternalServices;
 using Core.Shared;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -73,7 +75,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // HttpContext (needed for audit, user info)
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddHttpClient<IExternalApiService, ExternalApiService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(30);
+    client.BaseAddress = new Uri(builder.Configuration["ExternalApi:BaseUrl"]);
+});
 // Register ALL infra + core services
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddCors(options =>
